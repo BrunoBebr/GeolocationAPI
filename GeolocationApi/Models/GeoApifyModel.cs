@@ -8,7 +8,7 @@ namespace GeolocationApi.Models
 	public class GeoApifyResponseModel
 	{
         [JsonPropertyName("results")]
-        public IList<GeoApifyModel>? GetItems { get; set; }
+        public IList<GeoApifyModel> GetItems { get; set; } = new List<GeoApifyModel>();
 	}
 
     /// <summary>

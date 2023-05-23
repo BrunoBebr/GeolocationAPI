@@ -5,8 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GeolocationApi.Functions;
 using GeolocationApi.Models;
+using GeolocationApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,14 +17,11 @@ namespace GeolocationApi.Controllers
 
     public class GeolocationController : Controller
     {
-        private readonly IHttpClientFactory? httpClientFactory;
-        private readonly IOptions<ConfigModel> config;
+        private readonly IGeolocationService geolocationService;
 
-        public GeolocationController(IOptions<ConfigModel> config, IHttpClientFactory httpClientFactory)
+        public GeolocationController(IGeolocationService geolocationService)
         {
-            this.config = config;
-
-            this.httpClientFactory = httpClientFactory;
+            this.geolocationService = geolocationService;
         }
 
         /// <summary>
@@ -34,33 +31,20 @@ namespace GeolocationApi.Controllers
         /// <param name="limit"> Limit how many addresses should be returned</param>
         /// <param name="lang"> Language of output</param>
         /// <returns> JSON array of top similar locations</returns>
-        /// 
-        [HttpPost]
-        [Route("{addressLine}")]
 
+        
+        [HttpGet]
         public async Task<IActionResult> GetGeolocationLimit(
-            [FromRoute] String addressLine,
+            [FromQuery] String addressLine,
             [FromQuery] string lang = "cs",
             int limit = 5
             )
         {
             if (ValidateInput.IsValid(addressLine, 3))
             {
-                string APIKey = config.Value.APIKey!;
+               UniversalAddressResponseModel output = await geolocationService.GeoApifyResponseHandler(addressLine, lang, limit);
 
-                string url = "https://api.geoapify.com/v1/geocode/";
-
-                using HttpClient client = httpClientFactory.CreateClient();
-
-                client.BaseAddress = new Uri(url);
-
-                GeoApifyResponseModel? geoApifyModel = await client.GetFromJsonAsync<GeoApifyResponseModel>(
-                       $"autocomplete?text={addressLine}&lang={lang}&limit={limit}&type=amenity&format=json&apiKey={APIKey}",
-                        new JsonSerializerOptions(JsonSerializerDefaults.Web));
-
-                var output = ModelConverter.GeoApifyModelToUniversalModel(geoApifyModel!);
-
-                return Ok(output);
+               return Ok(output);
             }
             else
             {
