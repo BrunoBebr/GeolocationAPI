@@ -17,15 +17,12 @@ namespace GeolocationApi.Functions
 
 			IList<UniversalAddressModel> GetItems = new List<UniversalAddressModel> {};
 
-			if(universalResponse.GetItems == null)
-			{
-				universalResponse.GetItems = new List<UniversalAddressModel> { };
-			}
+			
 
-			foreach (var result in results.GetItems)
+			foreach (var result in results.GetItems!)
 			{
-				universalResponse.GetItems.Add(new UniversalAddressModel {
-					address = result.street + " " + result.housenumber,
+				universalResponse.GetItems!.Add(new UniversalAddressModel {
+					address = result.street! + " " + result.housenumber,
 					city = result.city,
 					zipCode = result.zipCode,
 					country = result.country,

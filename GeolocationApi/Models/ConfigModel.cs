@@ -4,7 +4,10 @@ namespace GeolocationApi.Models
 
 	public class ConfigModel
 	{
-		public string APIKey { get; set; }
+		/// <summary>
+		/// An api key for access to GeoApify API
+		/// </summary>
+		public string? APIKey { get; set; }
 	}
 }
 

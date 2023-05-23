@@ -24,16 +24,11 @@ builder.Services.AddHttpClient();
 builder.Services.Configure<ConfigModel>(
     builder.Configuration.GetSection("APIOptions"));
 
-
-
 var app = builder.Build();
 
 app.UseSwagger();
 
 app.UseSwaggerUI();
-
-
-
 
 app.UseHttpsRedirection();
 

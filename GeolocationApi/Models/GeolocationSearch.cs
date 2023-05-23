@@ -6,14 +6,14 @@ namespace GeolocationApi.Models
 		/// <summary>
 		/// Address for geolocation
 		/// </summary>
-		public string Address { get; set; }	
+		public string? Address { get; set; }	
 	}
 
 	public class Geolocation
 	{
-		public string Country { get; set; }
+		public string? Country { get; set; }
 
-		public string CountryCode { get; set; }
+		public string? CountryCode { get; set; }
 	}
 }
 

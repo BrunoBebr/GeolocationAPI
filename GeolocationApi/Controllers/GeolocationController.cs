@@ -32,6 +32,7 @@ namespace GeolocationApi.Controllers
         /// </summary>
         /// <param name="addressLine"> String on input</param>
         /// <param name="limit"> Limit how many addresses should be returned</param>
+        /// <param name="lang"> Language of output</param>
         /// <returns> JSON array of top similar locations</returns>
         /// 
         [HttpPost]
@@ -43,7 +44,7 @@ namespace GeolocationApi.Controllers
         {
             if (ValidateInput.IsValid(addressLine, 3))
             {
-                string APIKey = config.Value.APIKey;
+                string APIKey = config.Value.APIKey!;
 
                
 
@@ -58,7 +59,7 @@ namespace GeolocationApi.Controllers
                        $"autocomplete?text={addressLine}&lang={lang}&limit={limit}&type=amenity&format=json&apiKey={APIKey}",
                         new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
-                var output = ModelConverter.GeoApifyModelToUniversalModel(geoApifyModel);
+                var output = ModelConverter.GeoApifyModelToUniversalModel(geoApifyModel!);
 
                 return Ok(output);
             }
