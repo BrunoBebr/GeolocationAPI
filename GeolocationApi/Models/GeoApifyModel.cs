@@ -2,12 +2,18 @@
 using System.Text.Json.Serialization;
 namespace GeolocationApi.Models
 {
+    /// <summary>
+    /// Model for GeoApify refponse
+    /// </summary>
 	public class GeoApifyResponseModel
 	{
         [JsonPropertyName("results")]
         public IList<GeoApifyModel>? GetItems { get; set; }
 	}
 
+    /// <summary>
+    /// Model for each address form GeoApify response
+    /// </summary>
 	public class GeoApifyModel
 	{
         /// <summary>

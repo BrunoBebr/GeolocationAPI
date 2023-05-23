@@ -6,7 +6,8 @@ namespace GeolocationApi.Models
     public class UniversalAddressResponseModel
     {
         [JsonPropertyName("results")]
-        public IList<UniversalAddressModel>? GetItems { get; set; } = new List<UniversalAddressModel>();
+        public IList<UniversalAddressModel>? GetItems { get; set; } =
+            new List<UniversalAddressModel>();
     }
 	public class UniversalAddressModel
 	{
