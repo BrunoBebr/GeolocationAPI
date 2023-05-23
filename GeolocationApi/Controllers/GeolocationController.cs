@@ -27,19 +27,25 @@ namespace GeolocationApi.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
-
+        /// <summary>
+        /// Returns most similar locations
+        /// </summary>
+        /// <param name="addressLine"> String on input</param>
+        /// <param name="limit"> Limit how many addresses should be returned</param>
+        /// <returns> JSON array of top similar locations</returns>
+        /// 
         [HttpPost]
         [Route("{addressLine}")]
 
 
 
-        public async Task<IActionResult> GetGeolocationLimit([FromRoute] String addressLine, [FromQuery] int limit = 5)
+        public async Task<IActionResult> GetGeolocationLimit([FromRoute] String addressLine, [FromQuery] string lang = "cs", int limit = 5)
         {
             if (ValidateInput.IsValid(addressLine, 3))
             {
                 string APIKey = config.Value.APIKey;
 
-                string lang = config.Value.Language;
+               
 
                 string url = "https://api.geoapify.com/v1/geocode/";
 
