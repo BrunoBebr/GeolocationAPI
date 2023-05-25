@@ -41,8 +41,8 @@ namespace GeolocationApi.Controllers
 
         public async Task<IActionResult> GetGeolocationLimit(
             [FromQuery, BindRequired, MinLength(3)] string addressLine,
-            [FromQuery] string countryLimit = "",
-            string preferedCountry = "",
+            [FromQuery] string countryLimit = null,
+            string preferedCountry = null,
             string lang = "cs",
             int limit = 5
             )

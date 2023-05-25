@@ -28,6 +28,16 @@ namespace GeolocationApi.Services
             string preferedCountry
 			)
 		{
+            string otherParams = "";
+
+            if(countryLimit != null)
+            {
+                otherParams = otherParams + "&filter=countrycode:" + countryLimit;
+            }
+            if(preferedCountry != null)
+            {
+                otherParams = otherParams + "&bias=countrycode:" + preferedCountry;
+            }
             
             String APIKey = config.Value.APIKey!;
 
@@ -38,7 +48,7 @@ namespace GeolocationApi.Services
             client.BaseAddress = new Uri(url);
 
             GeoApifyResponseModel? geoApifyModel = await client.GetFromJsonAsync<GeoApifyResponseModel>(
-                       $"autocomplete?text={addressLine}&lang={lang}&limit={limit}&type=amenity&format=json&apiKey={APIKey}",
+                       $"autocomplete?text={addressLine}&lang={lang}&limit={limit}&type=amenity{otherParams}&format=json&apiKey={APIKey}",
                         new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             var output = ModelConverter.GeoApifyModelToUniversalModel(geoApifyModel!);
