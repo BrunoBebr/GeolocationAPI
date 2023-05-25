@@ -17,14 +17,18 @@ namespace GeolocationApi.Services
             this.config = config;
 
             this.httpClientFactory = httpClientFactory;
+
         }
 
         public async Task<UniversalAddressResponseModel> GeoApifyResponseHandler(
 			string addressLine,
 			string lang,
-			int limit    
+			int limit,
+            string countryLimit,
+            string preferedCountry
 			)
 		{
+            
             String APIKey = config.Value.APIKey!;
 
             string url = "https://api.geoapify.com/v1/geocode/";

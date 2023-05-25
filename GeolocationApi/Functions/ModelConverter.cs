@@ -20,7 +20,7 @@ namespace GeolocationApi.Functions
 			UniversalAddressResponseModel universalResponse = new UniversalAddressResponseModel();
 
 			IList<UniversalAddressModel> GetItems = new List<UniversalAddressModel> {};
-
+		
 			foreach (var result in results.GetItems!)
 			{
 				universalResponse.GetItems!.Add(new UniversalAddressModel {
@@ -30,7 +30,8 @@ namespace GeolocationApi.Functions
 					country = result.country,
 					lat = result.lat,
 					lon = result.lon
-				});   
+				});
+				
             }
 
             return universalResponse;

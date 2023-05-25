@@ -9,7 +9,12 @@ namespace GeolocationApi.Models
 	{
         [JsonPropertyName("results")]
         public IList<GeoApifyModel> GetItems { get; set; } = new List<GeoApifyModel>();
-	}
+
+        internal object Select(Func<object, UniversalAddressModel> value)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     /// <summary>
     /// Model for each address form GeoApify response

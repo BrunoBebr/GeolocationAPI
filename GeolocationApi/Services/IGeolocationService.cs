@@ -3,14 +3,18 @@ using GeolocationApi.Models;
 
 namespace GeolocationApi.Services
 {
-	public interface IGeolocationService
-	{
-        Task<UniversalAddressResponseModel> GeoApifyResponseHandler(
-           string addressLine,
-           string lang,
-           int limit
-           );
+    
+        public interface IGeolocationService
+        {
+            Task<UniversalAddressResponseModel> GeoApifyResponseHandler(
+               string addressLine,
+               string lang,
+               int limit,
+               string countryLimit,
+               string preferedCountry
+               );
 
-    }
+        }
+    
 }
 

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GeolocationApi.Functions;
 using GeolocationApi.Models;
 using GeolocationApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GeolocationApi.Controllers
 {
     [ApiController]
+    //[Authorize]
     [Route("api/[controller]")]
 
     public class GeolocationController : Controller
@@ -34,22 +38,19 @@ namespace GeolocationApi.Controllers
 
         
         [HttpGet]
+
         public async Task<IActionResult> GetGeolocationLimit(
-            [FromQuery] String addressLine,
-            [FromQuery] string lang = "cs",
+            [FromQuery, BindRequired, MinLength(3)] string addressLine,
+            [FromQuery] string countryLimit = "",
+            string preferedCountry = "",
+            string lang = "cs",
             int limit = 5
             )
-        {
-            if (ValidateInput.IsValid(addressLine, 3))
-            {
-               UniversalAddressResponseModel output = await geolocationService.GeoApifyResponseHandler(addressLine, lang, limit);
+        {           
+               UniversalAddressResponseModel output = await geolocationService.GeoApifyResponseHandler(addressLine, lang, limit, countryLimit, preferedCountry);
 
                return Ok(output);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            
             
         }
     }

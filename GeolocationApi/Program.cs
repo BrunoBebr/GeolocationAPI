@@ -4,6 +4,9 @@ using GeolocationApi.Services;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,15 @@ builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounte
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 builder.Services.AddInMemoryRateLimiting();
+
+/*builder.Services.AddControllers(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});*/
+
 
 // Header and description
 
